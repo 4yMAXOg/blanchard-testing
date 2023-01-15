@@ -1,0 +1,16 @@
+.my-slide__slide {
+  transform:  translateX(0);
+  opacity: 1;
+  visibility: visible;
+  transition: transform .3s ease-in-out, opacity .3s ease-in-out, visibility .3s ease-in-out;
+}
+
+.my-slide__slide_left_closed {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.my-slide-body-fixed-scroll {
+  overflow: hidden;
+}
