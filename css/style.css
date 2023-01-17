@@ -12,13 +12,6 @@ To do later:
 
 Problems to solve later:
 
-Safari: 
--) Login icon doesn't work
--) Catalog artist names seems to not work properly
--) Can't focus on links
--) Square outline on button in hero section
--) Square outline on button in contacts section
-
 Before releasing
 -) Turn on swiper autoplay back
 -) Clean all js files
@@ -46,6 +39,12 @@ last) Check all later comments
   --common-link-bg-offset-horizontal: 6px;
 
   --header-bottom-padding-bottom: 21px;
+
+  --solid-button-outline-width: 5px;
+  --solid-button-outline-offset: 5px;
+
+  --hollow-button-outline-width: 4px;
+  --hollow-button-outline-offset: 3px;
 }
 
 /* Fonts */
@@ -88,6 +87,8 @@ last) Check all later comments
 }
 
 /* Change tap highlight on phone */
+div, 
+fieldset, 
 input,
 textarea,
 button,
@@ -151,6 +152,7 @@ button {
 }
 
 .solid-button {
+  position: relative;
   color: white;
   border: none;
   background-color: var(--primary-color);
@@ -163,10 +165,24 @@ button {
   border-color: var(--artists-gallery-fill-color);
 }
 
+/* Doesn't work on Safari */
+
 .solid-button:focus-visible {
   border-color: transparent;
-  outline: 2px solid var(--link-hover-color);
-  outline-offset: 5px;
+  outline: none;
+  /* outline: 2px solid var(--link-hover-color); */
+  /* outline-offset: 5px; */
+}
+
+.solid-button:focus-visible::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * (var(--solid-button-outline-width) + var(--solid-button-outline-offset)));
+  right: calc(-1 * (var(--solid-button-outline-width) + var(--solid-button-outline-offset)));
+  bottom: calc(-1 * (var(--solid-button-outline-width) + var(--solid-button-outline-offset)));
+  left: calc(-1 * (var(--solid-button-outline-width) + var(--solid-button-outline-offset)));
+  border: 2px solid var(--link-hover-color);
+  border-radius: 100px;
 }
 
 .solid-button:active {
@@ -175,13 +191,27 @@ button {
 }
 
 .hollow-button {
+  position: relative;
   border: 2px solid #9D5CD0;
   border-radius: 100px;
 }
 
+/* Doesn't work on Safari */
 .hollow-button:focus-visible {
-  outline: 2px solid var(--link-hover-color);
-  outline-offset: 3px;
+  outline: none;
+  /* outline: 2px solid var(--link-hover-color); */
+  /* outline-offset: 3px; */
+}
+
+.hollow-button:focus-visible::before {
+  content: "";
+  position: absolute;
+  top: calc(-1 * (var(--hollow-button-outline-width) + var(--hollow-button-outline-offset)));
+  right: calc(-1 * (var(--hollow-button-outline-width) + var(--hollow-button-outline-offset)));
+  bottom: calc(-1 * (var(--hollow-button-outline-width) + var(--hollow-button-outline-offset)));
+  left: calc(-1 * (var(--hollow-button-outline-width) + var(--hollow-button-outline-offset)));
+  border: 2px solid var(--link-hover-color);
+  border-radius: 100px;
 }
 
 .hollow-button:hover {
@@ -831,14 +861,6 @@ a .common-icon:active {
   font-weight: 400;
 }
 
-.header-login__icon {
-  /* Delete later */
-  width: 13px;
-  height: 13px;
-  width: 100%;
-  height: 100%;
-}
-
 .header-login__link:hover .header-login__icon path {
   d: path("M9.62056 9.09278L10.6389 10.1111L14.25 6.5L10.6389 2.88889L9.62056 3.90722L11.4839 5.77778H0V7.22222H11.4839L9.62056 9.09278ZM16.0556 0H5.94444C5.14278 0 4.5 0.65 4.5 1.44444V4.33333H5.94444V1.44444H16.0556V11.5556H5.94444V8.66667H4.5V11.5556C4.5 12.35 5.14278 13 5.94444 13H16.0556C16.85 13 17.5 12.35 17.5 11.5556V1.44444C17.5 0.65 16.85 0 16.0556 0Z");
   /* d: path("M5.12056 9.09278L6.13889 10.1111L9.75 6.5L6.13889 2.88889L5.12056 3.90722L6.98389 5.77778H0V7.22222H6.98389L5.12056 9.09278ZM11.5556 0H1.44444C0.642778 0 0 0.65 0 1.44444V4.33333H1.44444V1.44444H11.5556V11.5556H1.44444V8.66667H0V11.5556C0 12.35 0.642778 13 1.44444 13H11.5556C12.35 13 13 12.35 13 11.5556V1.44444C13 0.65 12.35 0 11.5556 0Z"); */
@@ -929,13 +951,6 @@ a .common-icon:active {
 .hero-slide-3 {
   background-image: url("../images/pictures/hero-background/1920/hero-background-3.jpg");
 }
-
-/* .swiper__image { */
-/*   position: relative; */
-/*   bottom: 0; */
-/* /1* delete later maybe *1/ */
-/*   object-fit: cover; */
-/* } */
 
 /* About */
 
@@ -1338,7 +1353,7 @@ a .common-icon:active {
   max-height: 100%;
 }
 
-.artist__image {
+.artist__image, .artist__picture {
   margin-bottom: 20px;
   width: 100%;
   height: 470px;
@@ -1462,8 +1477,10 @@ a .common-icon:active {
 
 .artists__item {
   display: inline;
+  /* padding-left: calc(var(--common-link-bg-offset-horizontal)); */
   line-height: initial;
   text-align: left;
+  overflow: visible;
   cursor: pointer;
   /* margin-right: 60px; */
   /* margin-right: calc((60 + 230) / 1920 * 100vw - 230px); */
@@ -1472,6 +1489,8 @@ a .common-icon:active {
 }
 
  .artists__item:before {
+  left: 0;
+  width: calc(100% + 2px);
   background-color: var(--primary-color);
 }
 
@@ -1542,6 +1561,7 @@ a .common-icon:active {
 }
 
 .artists-list-placeholder__link {
+  display: inline;
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
@@ -1588,6 +1608,7 @@ a .common-icon:active {
   position: absolute;
   top: 50%;
   z-index: 1100;
+  overflow: visible;
 }
 
 .news__button-prev {
@@ -1598,6 +1619,11 @@ a .common-icon:active {
 .news__button-next {
   right: 0;
   transform: translate(50%, -50%);
+}
+
+.news__button-icon {
+  width: 100px;
+  height: 100px;
 }
 
 .news__pagination {
@@ -1716,22 +1742,26 @@ a .common-icon:active {
 }
 
 .partners__button {
-  height: 30px;
+  /* height: 30px; */
+  height: 36px;
 }
 
 .partners__button-prev {
   margin-right: 45px;
   transform: rotate(180deg);
+  margin-right: 43px;
+  margin-left: -3px;
 }
 
 .partners__button-icon {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
 }
 
 .partners__swiper {
   max-width: 1450px;
-  margin-right: 45px;
+  /* margin-right: 45px; */
+  margin-right: 39px;
   overflow: hidden;
 }
 
@@ -2476,11 +2506,11 @@ a .common-icon:active {
   /* Partners */
 
   .partners__button-prev {
-    margin-right: 23px;
+    margin-right: 20px;
   }
 
   .partners__swiper {
-    margin-right: 23px;
+    margin-right: 17px;
   }
 
   .partners__slide {
@@ -3263,11 +3293,15 @@ a .common-icon:active {
   }
 
   .partners__button-prev {
-    margin-right: 18px;
+    margin-right: 15px;
+  }
+
+  .partners__button-next {
+    margin-right: -3px;
   }
 
   .partners__swiper {
-    margin-right: 18px;
+    margin-right: 15px;
   }
 
   /* Contacts */
